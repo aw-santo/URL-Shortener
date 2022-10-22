@@ -1,0 +1,25 @@
+* {
+    /* margin: 0;
+    padding: 0; */
+    /* box-sizing: border-box; */
+    font-size: 20px;
+}
+
+#input {
+    width: 650px;
+    height: 35px;
+    padding: 10px 20px;
+    font-size: 17px;
+    border-radius: 10px;
+}
+  
+.btn {
+    display: block;
+    /* width: 90px; */
+    /* height: 35px; */
+    padding: 8px 15px;
+    margin-top: 20px;
+    color: black;
+    border-radius: 10px;
+    font-size: ;
+}
