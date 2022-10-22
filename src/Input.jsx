@@ -13,14 +13,13 @@ const Input = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
       method: "POST",
       body: JSON.stringify({ url }),
-    }).then(res => (res.json()))
-      .then(res => {
-        setKey(() => res.data);
-        console.log(key);
+    }).then(res => res.json())
+      .then( obj => {
+        let _key = obj.data;
+        setKey(_key);
       })
       .catch(function (res) {
         console.log(res);
@@ -30,6 +29,8 @@ const Input = () => {
   const handleChange = (e) => {
     setUrl(() => e.target.value);
   };
+
+  // let short = key?server+key:null;
 
   return (
     <>
@@ -44,7 +45,11 @@ const Input = () => {
       <button type="button" className="btn" onClick={handleClick}>
         get nano-url
       </button>
-      <p>{key?server+key:null}</p>
+      {key?.length===8 && <div className="output">
+        <p>{server+key}</p>
+        <button className="btn" onClick={() => navigator.clipboard.writeText(server+key)}>Copy</button>
+      </div>}
+      
     </>
   );
 };
