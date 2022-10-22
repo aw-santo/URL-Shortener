@@ -4,11 +4,13 @@ import "./Input.css";
 const Input = () => {
   const [url, setUrl] = useState("");
   const [key, setKey] = useState("");
+  const [_copy, set_Copy] = useState("Copy");
 
   const server = "https://nano-url.azurewebsites.net/";
 
   const handleClick = (e) => {
-
+    
+    setKey('');
     fetch(server, {
       headers: {
         Accept: "application/json",
@@ -25,11 +27,7 @@ const Input = () => {
         console.log(res);
       });
 
-    const copy = document.getElementById("copy-btn");
-    
-    if(copy){
-      copy.textContent = "Copy";
-    }
+    set_Copy("Copy");
   };
 
   const handleChange = (e) => {
@@ -38,13 +36,7 @@ const Input = () => {
 
   const copyToBoard = async (url) => {
     await navigator.clipboard.writeText(url);
-    const copy = document.getElementById("copy-btn");
-    
-    if(copy){
-      copy.addEventListener("click", ()=>{
-        copy.textContent = "Copied \u2713";
-      });
-    }
+    set_Copy("Copied \u2713");
   };
 
   // let short = key?server+key:null;
@@ -64,7 +56,7 @@ const Input = () => {
       </button>
       {key?.length===8 && <div className="output">
         <a href={server+key} target="_blank" rel="noreferrer">{server+key}</a>
-        <button id="copy-btn" className="btn" onClick={() => copyToBoard(server+key)}>Copy</button>
+        <button id="copy-btn" className="btn" onClick={() => copyToBoard(server+key)}>{_copy}</button>
       </div>}
     </>
   );
