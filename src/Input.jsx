@@ -64,7 +64,7 @@ const Input = () => {
       </button>
       {key?.length===8 && <div className="output">
         <a href={server+key} target="_blank" rel="noreferrer">{server+key}</a>
-        <button id="copy-btn" className="btn" onClick={copyToBoard(server+key)}>Copy</button>
+        <button id="copy-btn" className="btn" onClick={() => copyToBoard(server+key)}>Copy</button>
       </div>}
     </>
   );
