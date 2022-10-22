@@ -24,10 +24,27 @@ const Input = () => {
       .catch(function (res) {
         console.log(res);
       });
+
+    const copy = document.getElementById("copy-btn");
+    
+    if(copy){
+      copy.textContent = "Copy";
+    }
   };
 
   const handleChange = (e) => {
     setUrl(() => e.target.value);
+  };
+
+  const copyToBoard = async (url) => {
+    await navigator.clipboard.writeText(url);
+    const copy = document.getElementById("copy-btn");
+    
+    if(copy){
+      copy.addEventListener("click", ()=>{
+        copy.textContent = "Copied \u2713";
+      });
+    }
   };
 
   // let short = key?server+key:null;
@@ -43,13 +60,12 @@ const Input = () => {
         value={url}
       />
       <button type="button" className="btn" onClick={handleClick}>
-        get nano-url
+        Get nano-url
       </button>
       {key?.length===8 && <div className="output">
-        <p>{server+key}</p>
-        <button className="btn" onClick={() => navigator.clipboard.writeText(server+key)}>Copy</button>
+        <a href={server+key} target="_blank" rel="noreferrer">{server+key}</a>
+        <button id="copy-btn" className="btn" onClick={copyToBoard(server+key)}>Copy</button>
       </div>}
-      
     </>
   );
 };
