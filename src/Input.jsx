@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import "./Input.css";
+import {InfinitySpin} from 'react-loader-spinner';
 
 const Input = () => {
   const [url, setUrl] = useState("");
   const [key, setKey] = useState("");
   const [_copy, set_Copy] = useState("Copy");
+  const [loader, setLoader] = useState(false);
 
   const server = "https://nano-url.azurewebsites.net/";
 
   const handleClick = (e) => {
     
+    setLoader(true);
     setKey('');
     fetch(server, {
       headers: {
@@ -21,6 +24,7 @@ const Input = () => {
     }).then(res => res.json())
       .then( obj => {
         let _key = obj.data;
+        setLoader(false);
         setKey(_key);
       })
       .catch(function (res) {
@@ -51,10 +55,14 @@ const Input = () => {
         onChange={handleChange}
         value={url}
       />
-      <button type="button" className="btn" onClick={handleClick}>
+      <button type="button" className="btn" onClick={handleClick} disabled={loader}>
         Get nano-url
       </button>
-      {key?.length===8 && <div className="output">
+      {loader && <InfinitySpin 
+        width='200'
+        color="#4fa94d"
+      />}
+      {key?.length === 8 && <div className="output">
         <a href={server+key} target="_blank" rel="noreferrer">{server+key}</a>
         <button id="copy-btn" className="btn" onClick={() => copyToBoard(server+key)}>{_copy}</button>
       </div>}
